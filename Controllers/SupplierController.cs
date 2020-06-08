@@ -16,17 +16,18 @@ namespace WebApiBiusoProject.Controllers
         [Authorize]
         [Route("supplier")]
         [HttpGet]
-        public IEnumerable<Supplier> GetAllSuppliers()
+        public async Task<IActionResult> GetAllSuppliers()
         {
-            return objproduct.GetAllSuppliers();
+            var prova = await objproduct.GetAllSuppliers();
+            return Ok(await objproduct.GetAllSuppliers());
         }
 
         [Authorize]
         [Route("supplier/add")]
         [HttpPost]
-        public bool AddSupplier([FromBody] Supplier supplier)
+        public async Task<IActionResult> AddSupplier([FromBody] Supplier supplier)
         {
-            return objproduct.AddSupplier(supplier);
+            return Ok(await objproduct.AddSupplier(supplier));
         }
     }
 }

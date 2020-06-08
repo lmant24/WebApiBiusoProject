@@ -37,13 +37,13 @@ export class UpdateProduct extends Component {
         ];
 
         this.handleSave = this.handleSave.bind(this);
-
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        this.getSuppliers();
-        this.getDressToUpdate();
+        await this.getSuppliers();
+        await this.getDressToUpdate();
 
     }
 
@@ -120,7 +120,10 @@ export class UpdateProduct extends Component {
         this.setState({ material: selectedMaterial });
 
     };
-
+    handleCancel(event) {
+        event.preventDefault();
+        this.props.history.goBack();
+    }
     async handleSave(event) {
         event.preventDefault();
 

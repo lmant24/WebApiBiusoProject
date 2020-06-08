@@ -26,6 +26,7 @@ namespace WebApiBiusoProject.Models
         public virtual DbSet<Dress> Dress { get; set; }
         public virtual DbSet<PersistedGrants> PersistedGrants { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
+        public virtual DbSet<Sell> Sell { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -212,7 +213,8 @@ namespace WebApiBiusoProject.Models
                 entity.HasOne(d => d.SupplierNavigation)
                     .WithMany(p => p.Dress)
                     .HasForeignKey(d => d.Supplier)
-                    .HasConstraintName("fk_supplier");
+                    .HasConstraintName("fk_supplier")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<PersistedGrants>(entity =>
@@ -254,6 +256,59 @@ namespace WebApiBiusoProject.Models
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<Sell>(entity =>
+            {
+                entity.HasKey(e => new { e.Code, e.Size, e.Color, e.Dateofsale })
+                    .HasName("sale_pkey");
+
+                entity.ToTable("sell");
+
+                entity.Property(e => e.Code)
+                    .HasColumnName("code")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Size)
+                    .HasColumnName("size")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Color)
+                    .HasColumnName("color")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Dateofsale)
+                    .HasColumnName("dateofsale")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.Material).HasColumnName("material");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Pricenew).HasColumnName("pricenew");
+
+                entity.Property(e => e.Priceold).HasColumnName("priceold");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Supplier)
+                    .IsRequired()
+                    .HasColumnName("supplier")
+                    .HasMaxLength(255);
+
+            
+
+                entity.HasOne(d => d.SupplierNavigation)
+                    .WithMany(p => p.Sell)
+                    .HasForeignKey(d => d.Supplier)
+                    .HasConstraintName("fk_supplier")
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
             OnModelCreatingPartial(modelBuilder);

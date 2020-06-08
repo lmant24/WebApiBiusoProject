@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,13 +8,13 @@ namespace WebApiBiusoProject.Models
 {
     public class SupplierAccessLayer
     {
-        public IEnumerable<Supplier> GetAllSuppliers()
+        public async Task<IEnumerable<Supplier>> GetAllSuppliers()
         {
             using (var db = new biusoprojectContext())
             {
                 try
                 {
-                    return db.Supplier.ToList();
+                    return await db.Supplier.ToListAsync();
                 }
                 catch
                 {
@@ -22,13 +23,14 @@ namespace WebApiBiusoProject.Models
             }
         }
 
-        public bool AddSupplier(Supplier supplier)
+        public async Task<bool> AddSupplier(Supplier supplier)
         {
             using (var db = new biusoprojectContext())
             {
                 try
                 {
                     db.Supplier.Add(supplier);
+                    await db.SaveChangesAsync();
                     return true;
                 }
                 catch
@@ -37,5 +39,7 @@ namespace WebApiBiusoProject.Models
                 }
             }
         }
+
+        
     }
 }

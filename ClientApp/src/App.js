@@ -11,6 +11,8 @@ import { AddProduct } from './components/AddProduct';
 import { AddSupplier } from './components/AddSupplier';
 import { UpdateProduct } from './components/UpdateProduct';
 import { FetchSupplier } from './components/FetchSupplier';
+import { SellProduct } from './components/SellProduct';
+
 
 import './custom.css';
 import './css/button-span.css';
@@ -29,6 +31,7 @@ export default class App extends Component {
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <AuthorizeRoute path='/addproduct' component={AddProduct} />
             <AuthorizeRoute path='/updateproduct/:code/:size/:color' component={UpdateProduct} />
+            <AuthorizeRoute path='/sellproduct/:code/:size/:color' component={SellProduct} />
       </Layout>
     );
   }

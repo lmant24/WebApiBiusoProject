@@ -34,6 +34,7 @@ export class AddProduct extends Component {
         ];
 
         this.handleSave = this.handleSave.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     componentDidMount() {
@@ -75,13 +76,16 @@ export class AddProduct extends Component {
             {contents}
         </div>;
     }
+    handleCancel(event) {
+        event.preventDefault();
+        this.props.history.goBack();
+    }
 
     handleColorChange = (color, event) => {
         this.setState({ color: color.hex });
     };
     handleMaterialChange = selectedMaterial => {
         this.setState({ material: selectedMaterial });
-
     };
 
     async handleSave(event) {

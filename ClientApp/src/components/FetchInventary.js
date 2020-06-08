@@ -32,6 +32,11 @@ export class FetchInventary extends Component {
         this.props.history.push('updateproduct/' + code + "/" + size + "/" + color);
     }
 
+    handleSell(code, size, color) {
+        console.log(this);
+        this.props.history.push('sellproduct/' + code + "/" + size + "/" + color);
+    }
+
     async handleDelete(code, size, color) {
         console.log(this.state);
         if (!window.confirm("Do you want to delete product with Id: " + code + " - Size: " + size + " - Color: " + color + "?"))
@@ -117,6 +122,12 @@ export class FetchInventary extends Component {
             },
             {
                 label: '',
+                field: 'sell',
+                sort: 'asc',
+                width: 100
+            },
+            {
+                label: '',
                 field: 'update',
                 sort: 'asc',
                 width: 100
@@ -136,11 +147,12 @@ export class FetchInventary extends Component {
             name: dress.name,
             size: dress.size,
             quantity: dress.quantity,
-            price: dress.price,
+            price: dress.price + " €",
             color: <button type="button" className={"btn span-" + dress.color}></button>,
             material: !dress.material ? "" : dress.material.join(', '),
             description: dress.description,
             supplier: dress.supplier,
+            sell: <button type="button" className="btn-primary" onClick={(id) => this.handleSell(dress.code, dress.size, dress.color)}>Sell</button>,
             update: <button type="button" className="btn-primary" onClick={(id) => this.handleUpdate(dress.code, dress.size, dress.color)}>Update</button>,
             delete: <button type="button" className="btn-primary" onClick={(id) => this.handleDelete(dress.code, dress.size, dress.color)}>Delete</button>
         }));
